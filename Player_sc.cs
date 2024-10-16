@@ -19,13 +19,16 @@ public class Player_sc : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
-            Instantiate(laser, transform.position + new Vector3(0,1f,0) , Quaternion.identity);
-            _nextFire = Time.time + _fireRate;
+            atis();
+
         }
 
+        void atis()
+        {
+            Instantiate(laser, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
+            _nextFire = Time.time + _fireRate;
+        }
     }
-
-
 
 
     void method()
