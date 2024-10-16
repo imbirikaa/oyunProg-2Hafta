@@ -2,23 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser_sc : MonoBehaviour
+public class Player_sc : MonoBehaviour
 {
-    private float _speed = 5f;
+    private float _speed = 10f;
+    private float _nextFire = 0.2f;
+    private float _fireRate = 1f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject laser;
 
-    // Update is called once per frame
+
+
+
     void Update()
     {
-        transform.Translate(Vector3.up * Time.deltaTime * _speed);
-        if (transform.position.y > 7.22f)
+        method();
+
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
-            Destroy(gameObject);
+            atis();
+
+        }
+
+        void atis()
+        {
+            Instantiate(laser, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
+            _nextFire = Time.time + _fireRate;
+        }
+    }
+
+
+    void method()
+
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float VerInput = Input.GetAxis("Vertical");
+        Vector3 direction = new Vector3(horizontalInput, VerInput, 0);
+        transform.Translate(direction * Time.deltaTime * _speed);
+
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -8.3f, 0), 0);
+        if (transform.position.x > 11.3f)
+        {
+            transform.position = new Vector3(-11.3f, transform.position.y, 0);
+        }
+        else if (transform.position.x < -11.3f)
+        {
+            transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
     }
 }
